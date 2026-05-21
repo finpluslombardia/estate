@@ -1,0 +1,797 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2869
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="it">\
+<head>\
+  <meta charset="UTF-8" />\
+  <title>Orari e Meteo Piscina Lampugnano</title>\
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />\
+\
+  <style>\
+    :root \{\
+      --primary-color: #003366;\
+      --secondary-color: #0099cc; /* Azzurro estivo */\
+      --bg-color: #f0f8ff;\
+      --header-height: 220px; \
+      --footer-height: 80px;\
+    \}\
+\
+    body \{\
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;\
+      margin: 0;\
+      background-color: var(--bg-color);\
+      color: var(--primary-color);\
+      letter-spacing: -0.5px;\
+      display: flex;\
+      flex-direction: column;\
+      height: 100vh;\
+      overflow: hidden;\
+    \}\
+\
+    /* ====== HEADER ====== */\
+    header \{\
+      display: flex;\
+      justify-content: space-between;\
+      align-items: center;\
+      background-color: #ffffff;\
+      padding: 0 40px;\
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);\
+      height: var(--header-height);\
+      position: fixed;\
+      top: 0; left: 0; right: 0;\
+      z-index: 1000;\
+    \}\
+    header img \{\
+      height: 85%; \
+      width: auto;\
+      object-fit: contain;\
+    \}\
+    .datetime \{ text-align: right; line-height: 1; \}\
+    \
+    .datetime .time \{ \
+        font-weight: 700; \
+        font-size: 110px; \
+        letter-spacing: -3px; \
+        color: #003366;\
+    \}\
+    \
+    .datetime .date \{ \
+        font-weight: 500; \
+        font-size: 45px; \
+        color: #004080; \
+        text-transform: capitalize; \
+        margin-top: 5px;\
+    \}\
+\
+    /* ====== BANNER PUBBLICITARIO ====== */\
+    #ad-banner \{\
+      position: fixed;\
+      top: var(--header-height);\
+      left: 0;\
+      right: 0;\
+      bottom: var(--footer-height);\
+      z-index: 1100;\
+      background-color: rgba(0,0,0,0.8); /* Sfondo scuro semi-trasparente */\
+      display: flex;\
+      justify-content: center;\
+      align-items: center;\
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease;\
+      transform: translateY(-100%);\
+      opacity: 0;\
+      pointer-events: none;\
+    \}\
+    \
+    #ad-banner.show \{\
+      transform: translateY(0);\
+      opacity: 1;\
+      pointer-events: all;\
+    \}\
+    \
+    #ad-banner img \{\
+      width: 80%; \
+      max-width: 1500px;        \
+      height: auto;             \
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6); \
+      border-radius: 20px;\
+    \}\
+\
+    /* ====== CONTENUTO PRINCIPALE ====== */\
+    .main-content \{\
+      margin-top: var(--header-height);\
+      margin-bottom: var(--footer-height);\
+      height: calc(100vh - var(--header-height) - var(--footer-height));\
+      display: flex;\
+      flex-direction: column;\
+      padding: 20px 40px;\
+      box-sizing: border-box;\
+      gap: 30px;\
+    \}\
+\
+    /* ====== SEZIONE SUPERIORE: VASCA ESTERNA & METEO ====== */\
+    .top-section \{\
+      flex: 1; /* Prende met\'e0 altezza */\
+      display: flex;\
+      gap: 30px;\
+    \}\
+\
+    .pool-info-card, .weather-card \{\
+      background: white;\
+      border-radius: 24px;\
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);\
+      padding: 30px;\
+      display: flex;\
+    \}\
+\
+    .pool-info-card \{\
+      flex: 1; /* 40% dello spazio */\
+      flex-direction: column;\
+      justify-content: center;\
+      position: relative;\
+      overflow: hidden;\
+    \}\
+\
+    .pool-info-card::before \{\
+      content: "";\
+      position: absolute;\
+      top: 0; left: 0; width: 100%; height: 100%;\
+      background: linear-gradient(135deg, rgba(0, 153, 204, 0.1) 0%, rgba(0, 51, 102, 0.05) 100%);\
+      z-index: 0;\
+    \}\
+\
+    .pool-info-content \{\
+      position: relative;\
+      z-index: 1;\
+    \}\
+\
+    .pool-title \{\
+      font-size: 55px;\
+      font-weight: 800;\
+      color: var(--primary-color);\
+      margin: 0 0 10px 0;\
+      display: flex;\
+      align-items: center;\
+      gap: 15px;\
+    \}\
+    \
+    .pool-status \{\
+      font-size: 35px;\
+      font-weight: 600;\
+      color: #198754;\
+      background: #d1e7dd;\
+      padding: 10px 25px;\
+      border-radius: 50px;\
+      display: inline-block;\
+      margin-bottom: 20px;\
+    \}\
+\
+    .pool-hours \{\
+      font-size: 40px;\
+      color: #444;\
+      font-weight: 500;\
+    \}\
+    \
+    .pool-hours strong \{\
+      font-size: 50px;\
+      color: var(--primary-color);\
+      display: block;\
+      margin-top: 10px;\
+    \}\
+\
+    .weather-card \{\
+      flex: 1.5; /* 60% dello spazio */\
+      align-items: center;\
+      justify-content: space-between;\
+      gap: 20px;\
+    \}\
+\
+    .weather-current \{\
+      display: flex;\
+      flex-direction: column;\
+      align-items: center;\
+      justify-content: center;\
+      border-right: 2px solid #eee;\
+      padding-right: 30px;\
+      min-width: 250px;\
+    \}\
+\
+    .weather-current .w-icon \{\
+      font-size: 100px;\
+      line-height: 1;\
+      margin-bottom: 10px;\
+    \}\
+\
+    .weather-current .w-temp \{\
+      font-size: 80px;\
+      font-weight: 800;\
+      color: var(--primary-color);\
+      line-height: 1;\
+    \}\
+\
+    .weather-current .w-desc \{\
+      font-size: 30px;\
+      font-weight: 500;\
+      color: #666;\
+      text-align: center;\
+      margin-top: 5px;\
+    \}\
+\
+    .weather-forecast \{\
+      flex: 1;\
+      display: flex;\
+      justify-content: space-around;\
+      align-items: stretch;\
+      height: 100%;\
+    \}\
+\
+    .forecast-item \{\
+      display: flex;\
+      flex-direction: column;\
+      align-items: center;\
+      justify-content: center;\
+      padding: 15px;\
+      background: #f8fbfd;\
+      border-radius: 16px;\
+      width: 22%;\
+    \}\
+\
+    .forecast-time \{\
+      font-size: 28px;\
+      font-weight: 700;\
+      color: #444;\
+      margin-bottom: 15px;\
+      text-transform: capitalize;\
+    \}\
+\
+    .forecast-icon \{\
+      font-size: 55px;\
+      margin-bottom: 15px;\
+    \}\
+\
+    .forecast-temp \{\
+      font-size: 32px;\
+      font-weight: 700;\
+      color: var(--primary-color);\
+    \}\
+    \
+    .forecast-title-badge \{\
+        position: absolute;\
+        top: 15px; right: 15px;\
+        background: var(--secondary-color);\
+        color: white;\
+        padding: 5px 15px;\
+        border-radius: 20px;\
+        font-size: 18px;\
+        font-weight: 600;\
+        text-transform: uppercase;\
+        letter-spacing: 1px;\
+    \}\
+\
+    /* ====== SEZIONE INFERIORE: CORSI ====== */\
+    .bottom-section \{\
+      flex: 1; /* Prende l'altra met\'e0 */\
+      display: flex;\
+      flex-direction: column;\
+      justify-content: flex-start;\
+      gap: 20px;\
+      overflow: hidden; /* Nasconde se troppi, JS limiter\'e0 il numero */\
+    \}\
+\
+    .course \{\
+      display: flex;\
+      border-radius: 20px; \
+      overflow: hidden;\
+      background-color: #fff;\
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);\
+      width: 100%;\
+      height: 48%; /* Si adatta alla mezza pagina per farne stare max 2 o 3 */\
+      transition: all 0.3s ease;\
+    \}\
+    .course > div \{\
+      padding: 20px 30px; \
+      display: flex;\
+      align-items: center;\
+    \}\
+    .course .attivita \{\
+      flex: 2;\
+      font-size: 50px; /* Ridotto leggermente per adattarsi */\
+      font-weight: 700;\
+      color: var(--primary-color);\
+      line-height: 1.1;\
+    \}\
+    .course .dettagli \{\
+      flex: 1.2;\
+      display: flex;\
+      justify-content: space-around;\
+      background-color: rgba(0,0,0,0.02);\
+      border-left: 1px solid rgba(0,0,0,0.05);\
+    \}\
+    .info-box \{\
+      display: flex;\
+      flex-direction: column;\
+      align-items: center;\
+      justify-content: center;\
+    \}\
+    .info-label \{ font-size: 20px; text-transform: uppercase; color: #666; font-weight: 600; margin-bottom: 5px; \}\
+    .info-time \{ font-size: 55px; font-weight: 700; color: #000; line-height: 1; \}\
+\
+    /* Colori stato corsi */\
+    .green  \{ background-color: #d1e7dd; border-left: 15px solid #198754; \}\
+    .yellow \{ background-color: #fff3cd; border-left: 15px solid #ffc107; \}\
+    .gray   \{ background-color: #f8f9fa; border-left: 15px solid #6c757d; color: #6c757d; \}\
+    \
+    .yellow \{ animation: pulse-border 2s infinite; \}\
+    @keyframes pulse-border \{\
+      0% \{ border-left-color: #ffc107; \}\
+      50% \{ border-left-color: #ffdb72; \}\
+      100% \{ border-left-color: #ffc107; \}\
+    \}\
+\
+    .empty-message \{\
+      text-align: center;\
+      font-size: 40px;\
+      font-weight: 500;\
+      color: var(--primary-color);\
+      background: white;\
+      padding: 40px;\
+      border-radius: 20px;\
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);\
+      width: 100%;\
+    \}\
+\
+    /* ====== FOOTER TICKER ====== */\
+    footer \{\
+      background: #003366;\
+      color: white;\
+      height: var(--footer-height);\
+      overflow: hidden;\
+      display: flex;\
+      align-items: center;\
+      position: fixed;\
+      bottom: 0; left: 0; right: 0;\
+      z-index: 1000;\
+    \}\
+    .ticker \{\
+      width: 100%;\
+      height: 100%;\
+      overflow: hidden;\
+      position: relative;\
+      white-space: nowrap;\
+      display: flex;\
+      align-items: center;\
+    \}\
+    .ticker__track \{\
+      display: inline-block;\
+      white-space: nowrap;\
+      will-change: transform;\
+      animation: ticker var(--ticker-duration, 20s) linear infinite;\
+    \}\
+    .ticker__content \{\
+      display: inline-block;\
+      padding-right: 100px;\
+      font-size: 40px;\
+      font-weight: 500;\
+      line-height: var(--footer-height);\
+    \}\
+    @keyframes ticker \{\
+      0%   \{ transform: translateX(0); \}\
+      100% \{ transform: translateX(-50%); \}\
+    \}\
+  </style>\
+</head>\
+<body>\
+\
+  <header>\
+    <img src="CF Lampugnano blu xl.png" alt="Logo Piscina" onerror="this.style.display='none'; document.write('<h2>Piscina Lampugnano</h2>')"/>\
+    <div class="datetime">\
+      <div class="time" id="clock">--:--</div>\
+      <div class="date" id="date">--</div>\
+    </div>\
+  </header>\
+\
+  <!-- BANNER PUBBLICITARIO -->\
+  <div id="ad-banner">\
+    <!-- Inserisci qui il nome del file della tua foto -->\
+    <img src="banner.jpg" alt="Pubblicit\'e0" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'empty-message\\'>Spazio Pubblicitario</div>';"/>\
+  </div>\
+\
+  <div class="main-content">\
+    \
+    <!-- TOP SECTION: VASCA ESTERNA & METEO -->\
+    <div class="top-section">\
+        <div class="pool-info-card">\
+            <div class="pool-info-content">\
+                <h2 class="pool-title">\uc0\u9728 \u65039  Vasca Esterna</h2>\
+                <div class="pool-status">Aperta</div>\
+                <div class="pool-hours">\
+                    Tutti i giorni dalle\
+                    <strong>10:00 - 19:00</strong>\
+                </div>\
+            </div>\
+        </div>\
+\
+        <div class="weather-card" style="position:relative;">\
+            <div class="forecast-title-badge" id="weather-badge">Previsioni</div>\
+            <div class="weather-current">\
+                <div class="w-icon" id="current-w-icon">--</div>\
+                <div class="w-temp" id="current-w-temp">--\'b0</div>\
+                <div class="w-desc" id="current-w-desc">Caricamento...</div>\
+            </div>\
+            <div class="weather-forecast" id="forecast-container">\
+                <!-- Forecast items injected here via JS -->\
+            </div>\
+        </div>\
+    </div>\
+\
+    <!-- BOTTOM SECTION: CORSI INDOOR / ALTRI -->\
+    <div class="bottom-section" id="courses">\
+        <div class="empty-message">Caricamento corsi in corso...</div>\
+    </div>\
+\
+  </div>\
+\
+  <footer>\
+    <div class="ticker" id="ticker">\
+      <div class="ticker__track" id="ticker-track">\
+        <span class="ticker__content" id="ticker-copy-1">...</span>\
+        <span class="ticker__content" id="ticker-copy-2">...</span>\
+      </div>\
+    </div>\
+  </footer>\
+\
+  <script>\
+    /* ====== OROLOGIO ====== */\
+    function updateClock() \{\
+      const now = new Date();\
+      const h = now.getHours().toString().padStart(2, '0');\
+      const m = now.getMinutes().toString().padStart(2, '0');\
+      \
+      const options = \{ weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' \};\
+      const dateStr = now.toLocaleDateString('it-IT', options); \
+      \
+      document.getElementById("clock").textContent = `$\{h\}:$\{m\}`;\
+      document.getElementById("date").textContent  = dateStr;\
+    \}\
+    setInterval(updateClock, 1000);\
+    updateClock();\
+\
+    /* ====== BANNER PUBBLICITARIO ====== */\
+    const adBanner = document.getElementById('ad-banner');\
+    const AD_INTERVAL_MS = 15 * 60 * 1000; // Ogni 15 minuti\
+    const AD_DURATION_MS = 15 * 1000;      // Rimane 15 secondi\
+\
+    function runAdCycle() \{\
+      if (adBanner) adBanner.classList.add('show');\
+      setTimeout(() => \{\
+        if (adBanner) adBanner.classList.remove('show');\
+      \}, AD_DURATION_MS);\
+    \}\
+    // Avvia banner poco dopo l'accensione\
+    setTimeout(runAdCycle, 3000);\
+    setInterval(runAdCycle, AD_INTERVAL_MS);\
+\
+\
+    /* ====== METEO (OPEN-METEO API) ====== */\
+    const weatherCodes = \{\
+        0:  \{ icon: '\uc0\u9728 \u65039 ', desc: 'Sereno' \},\
+        1:  \{ icon: '\uc0\u55356 \u57124 \u65039 ', desc: 'Poco nuvoloso' \},\
+        2:  \{ icon: '\uc0\u9925 ', desc: 'Parzialmente nuvoloso' \},\
+        3:  \{ icon: '\uc0\u9729 \u65039 ', desc: 'Coperto' \},\
+        45: \{ icon: '\uc0\u55356 \u57131 \u65039 ', desc: 'Nebbia' \},\
+        48: \{ icon: '\uc0\u55356 \u57131 \u65039 ', desc: 'Nebbia' \},\
+        51: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioviggine' \},\
+        53: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioviggine' \},\
+        55: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioviggine' \},\
+        61: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioggia' \},\
+        63: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioggia moderata' \},\
+        65: \{ icon: '\uc0\u55356 \u57127 \u65039 ', desc: 'Pioggia forte' \},\
+        71: \{ icon: '\uc0\u10052 \u65039 ', desc: 'Neve' \},\
+        80: \{ icon: '\uc0\u55356 \u57126 \u65039 ', desc: 'Acquazzone' \},\
+        81: \{ icon: '\uc0\u55356 \u57126 \u65039 ', desc: 'Acquazzone' \},\
+        82: \{ icon: '\uc0\u9928 \u65039 ', desc: 'Acquazzone forte' \},\
+        95: \{ icon: '\uc0\u9928 \u65039 ', desc: 'Temporale' \},\
+        96: \{ icon: '\uc0\u9928 \u65039 ', desc: 'Temporale' \},\
+        99: \{ icon: '\uc0\u9928 \u65039 ', desc: 'Temporale forte' \}\
+    \};\
+\
+    function getWeatherInfo(code) \{\
+        return weatherCodes[code] || \{ icon: '\uc0\u55356 \u57121 \u65039 ', desc: 'N/D' \};\
+    \}\
+\
+    async function fetchWeather() \{\
+        // Coordinate per Milano/Lampugnano: Lat 45.49, Lon 9.13\
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=45.49&longitude=9.13&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FRome';\
+        \
+        try \{\
+            const res = await fetch(url);\
+            if(!res.ok) throw new Error("Errore Meteo");\
+            const data = await res.json();\
+            \
+            // 1. Meteo Attuale\
+            const currentCode = data.current.weather_code;\
+            const currentTemp = Math.round(data.current.temperature_2m);\
+            const wInfo = getWeatherInfo(currentCode);\
+            \
+            document.getElementById('current-w-icon').textContent = wInfo.icon;\
+            document.getElementById('current-w-temp').textContent = currentTemp + '\'b0';\
+            document.getElementById('current-w-desc').textContent = wInfo.desc;\
+\
+            // 2. Previsioni (Logica Chiusura: se sono passate le 17:00, mostra i prossimi giorni)\
+            const hour = new Date().getHours();\
+            const forecastContainer = document.getElementById('forecast-container');\
+            const badge = document.getElementById('weather-badge');\
+            let forecastHtml = '';\
+\
+            if (hour >= 17) \{\
+                // MOSTRAMO I PROSSIMI 3 GIORNI\
+                badge.textContent = 'Prossimi Giorni';\
+                // L'indice 0 \'e8 oggi, l'indice 1,2,3 sono domani, dopodomani e il giorno dopo\
+                for(let i=1; i<=3; i++) \{\
+                    const dateStr = data.daily.time[i]; // formato "YYYY-MM-DD"\
+                    const dateObj = new Date(dateStr);\
+                    const dayName = dateObj.toLocaleDateString('it-IT', \{ weekday: 'short' \});\
+                    const code = data.daily.weather_code[i];\
+                    const maxTemp = Math.round(data.daily.temperature_2m_max[i]);\
+                    const minTemp = Math.round(data.daily.temperature_2m_min[i]);\
+                    const info = getWeatherInfo(code);\
+\
+                    forecastHtml += `\
+                        <div class="forecast-item">\
+                            <div class="forecast-time">$\{dayName\}</div>\
+                            <div class="forecast-icon">$\{info.icon\}</div>\
+                            <div class="forecast-temp">$\{maxTemp\}\'b0 / <span style="font-size:20px;color:#888;">$\{minTemp\}\'b0</span></div>\
+                        </div>\
+                    `;\
+                \}\
+            \} else \{\
+                // MOSTRIAMO LE PROSSIME 4-6 ORE\
+                badge.textContent = 'Prossime Ore';\
+                // Cerchiamo l'indice dell'ora corrente nell'array orario\
+                const nowIso = new Date();\
+                nowIso.setMinutes(0,0,0);\
+                // open-meteo ritorna formati ISO orari locali, troviamo l'indice\
+                const currentHourIndex = data.hourly.time.findIndex(t => new Date(t).getTime() === nowIso.getTime());\
+                \
+                let startIdx = currentHourIndex >= 0 ? currentHourIndex + 1 : 1;\
+                // Mostriamo le 4 ore successive saltando un'ora per avere una visione pi\'f9 ampia (es. +1h, +3h, +5h)\
+                const indices = [startIdx, startIdx+2, startIdx+4, startIdx+6];\
+                \
+                for(let idx of indices) \{\
+                    if(idx < data.hourly.time.length) \{\
+                        const timeStr = data.hourly.time[idx];\
+                        const tObj = new Date(timeStr);\
+                        const hStr = tObj.getHours().toString().padStart(2, '0') + ':00';\
+                        const code = data.hourly.weather_code[idx];\
+                        const temp = Math.round(data.hourly.temperature_2m[idx]);\
+                        const info = getWeatherInfo(code);\
+\
+                        forecastHtml += `\
+                            <div class="forecast-item">\
+                                <div class="forecast-time">$\{hStr\}</div>\
+                                <div class="forecast-icon">$\{info.icon\}</div>\
+                                <div class="forecast-temp">$\{temp\}\'b0</div>\
+                            </div>\
+                        `;\
+                    \}\
+                \}\
+            \}\
+            \
+            forecastContainer.innerHTML = forecastHtml;\
+\
+        \} catch(e) \{\
+            console.error("Meteo non caricato", e);\
+        \}\
+    \}\
+    // Esegui subito e aggiorna ogni 30 minuti\
+    fetchWeather();\
+    setInterval(fetchWeather, 30 * 60 * 1000);\
+\
+\
+    /* ====== COUNTDOWN LIVE ====== */\
+    function updateCountdowns() \{\
+      const now = Date.now();\
+      document.querySelectorAll('.live-countdown').forEach(el => \{\
+        const target = parseInt(el.getAttribute('data-target'));\
+        const diff = target - now;\
+        if (diff >= 0) \{\
+          const m = Math.floor(diff / 60000).toString().padStart(2, '0');\
+          const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');\
+          el.textContent = `$\{m\}:$\{s\}`;\
+        \} else \{\
+          const courseNode = el.closest('.course');\
+          if (courseNode && courseNode.classList.contains('yellow')) \{\
+            courseNode.classList.remove('yellow');\
+            courseNode.classList.add('green');\
+            const originalTime = el.getAttribute('data-original');\
+            const infoBox = el.closest('.info-box');\
+            if (infoBox && originalTime) \{\
+              infoBox.innerHTML = `\
+                <span class="info-label">Ingresso</span>\
+                <span class="info-time">$\{originalTime\}</span>\
+              `;\
+            \}\
+          \} else \{\
+            el.textContent = "00:00";\
+          \}\
+        \}\
+      \});\
+    \}\
+    setInterval(updateCountdowns, 1000);\
+\
+    /* ====== UTILS CORSI ====== */\
+    function normalizeStr(str) \{\
+      if (!str) return "";\
+      return str.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().trim();\
+    \}\
+\
+    function parseTime(t) \{\
+      if (!t || typeof t !== 'string' || !t.includes(':')) return NaN;\
+      const [h, m] = t.split(":").map(Number);\
+      return (h * 60) + m;\
+    \}\
+\
+    function formatCell(cell) \{\
+      if (!cell) return "";\
+      if (cell.f) return cell.f;\
+      if (typeof cell.v === 'string') return cell.v;\
+      if (typeof cell.v === 'number') return cell.v.toString();\
+      return "";\
+    \}\
+\
+    /* ====== CARICAMENTO DATI CORSI ====== */\
+    async function loadAll() \{\
+      const SHEET_ID = '1dcs1X7x84g69f14m9Sl2KmqZUbCI6lLBBfi3QCMNqWI';\
+      const SHEET_BASE = `https://docs.google.com/spreadsheets/d/$\{SHEET_ID\}/gviz/tq?tqx=out:json&sheet=`;\
+      \
+      try \{\
+        const resC = await fetch(SHEET_BASE + 'Corsi');\
+        if (!resC.ok) throw new Error("Network response was not ok");\
+        const txtC = await resC.text();\
+        const jsonC = JSON.parse(txtC.substring(47).slice(0, -2));\
+        const rowsC = jsonC.table.rows.map(r => r.c.map(c => c ? formatCell(c) : ""));\
+\
+        const now = new Date();\
+        const currentTime = now.getHours() * 60 + now.getMinutes();\
+        const todayName = normalizeStr(now.toLocaleDateString('it-IT', \{ weekday: 'long' \}));\
+\
+        let parsed = rowsC\
+          .filter(r => normalizeStr(r[0]) === todayName)\
+          .map(r => \{\
+            const ingressoMin = parseTime(r[2]);\
+            const inizioMin   = parseTime(r[3]);\
+            const durata      = Number.parseInt(r[4]) || 60;\
+            return \{\
+              attivita: r[1] || '',\
+              oraIngresso: r[2] || '',\
+              oraInizio: r[3] || '',\
+              durata,\
+              ingressoMin,\
+              inizioMin\
+            \};\
+          \})\
+          .filter(c => Number.isFinite(c.ingressoMin) && currentTime <= (c.ingressoMin + c.durata))\
+          .sort((a, b) => a.ingressoMin - b.ingressoMin);\
+\
+        renderCourses(parsed, currentTime);\
+\
+        /* ---- FETCH NOTE PER TICKER ---- */\
+        const resN = await fetch(SHEET_BASE + 'Note');\
+        const txtN = await resN.text();\
+        const jsonN = JSON.parse(txtN.substring(47).slice(0, -2));\
+        const rowsN = jsonN.table.rows.map(r => r.c.map(c => c ? formatCell(c) : ""));\
+        const notesText = rowsN\
+          .filter(r => r[0] && r[0].trim() !== '')\
+          .map(r => r[0])\
+          .join("  \'95  ");\
+\
+        updateTicker(notesText || 'Benvenuti alla Piscina Lampugnano \'95 Vasca Esterna Aperta dalle 10 alle 19');\
+\
+      \} catch (err) \{\
+        console.error('Errore update:', err);\
+        const box = document.getElementById('courses');\
+        if (!box.children.length || box.innerText.includes('Caricamento')) \{\
+           box.innerHTML = `<div class="empty-message">\uc0\u9888 \u65039  Riconnessione ai corsi in corso...</div>`;\
+        \}\
+      \}\
+    \}\
+\
+    function renderCourses(courses, currentTime) \{\
+        const coursesBox = document.getElementById('courses');\
+        let htmlContent = '';\
+\
+        if (courses.length === 0) \{\
+           htmlContent = `\
+            <div class="empty-message">\
+              \uc0\u55356 \u57290 \u8205 \u9794 \u65039  I corsi indoor di oggi sono terminati.<br>\
+              <span style="font-size:30px; color:#666">Vi aspettiamo domani!</span>\
+            </div>`;\
+        \} else \{\
+          // MODIFICATO: Mostra massimo 2/3 corsi per farli stare nella mezza pagina.\
+          const visible = courses.slice(0, 2); \
+          \
+          visible.forEach(corso => \{\
+            const timeToStart = corso.ingressoMin - currentTime;\
+            \
+            let style = 'gray'; \
+            let ingressoHtml = `\
+                <span class="info-label">Ingresso</span>\
+                <span class="info-time">$\{corso.oraIngresso\}</span>\
+            `;\
+\
+            if (timeToStart <= 0 && timeToStart > -corso.durata) \{\
+                style = 'green'; \
+            \} else if (timeToStart <= 5 && timeToStart > 0) \{\
+                style = 'yellow';\
+                if (corso.oraIngresso && corso.oraIngresso.includes(':')) \{\
+                    const [h, m] = corso.oraIngresso.split(':').map(Number);\
+                    const targetDate = new Date();\
+                    targetDate.setHours(h, m, 0, 0);\
+                    ingressoHtml = `\
+                        <span class="info-label" style="color: #d32f2f;">Ingresso tra</span>\
+                        <span class="info-time live-countdown" data-target="$\{targetDate.getTime()\}" data-original="$\{corso.oraIngresso\}">--:--</span>\
+                    `;\
+                \}\
+            \}\
+\
+            let inizioHtml = `\
+                <span class="info-label">Inizio</span>\
+                <span class="info-time">$\{corso.oraInizio\}</span>\
+            `;\
+\
+            if (corso.attivita && corso.attivita.toLowerCase().includes('nuoto libero') && !isNaN(corso.inizioMin) && currentTime >= corso.inizioMin) \{\
+                const fineMin = corso.inizioMin + corso.durata;\
+                const hStr = Math.floor(fineMin / 60).toString().padStart(2, '0');\
+                const mStr = (fineMin % 60).toString().padStart(2, '0');\
+                inizioHtml = `\
+                    <span class="info-label">Fine</span>\
+                    <span class="info-time">$\{hStr\}:$\{mStr\}</span>\
+                `;\
+            \}\
+\
+            htmlContent += `\
+              <div class="course $\{style\}">\
+                <div class="attivita">$\{corso.attivita\}</div>\
+                <div class="dettagli">\
+                    <div class="info-box">\
+                        $\{ingressoHtml\}\
+                    </div>\
+                    <div class="info-box">\
+                        $\{inizioHtml\}\
+                    </div>\
+                </div>\
+              </div>\
+            `;\
+          \});\
+        \}\
+        coursesBox.innerHTML = htmlContent;\
+        updateCountdowns(); \
+    \}\
+\
+    function updateTicker(text) \{\
+        const copy1 = document.getElementById('ticker-copy-1');\
+        const copy2 = document.getElementById('ticker-copy-2');\
+        const track = document.getElementById('ticker-track');\
+        \
+        if (copy1.textContent === text) return;\
+\
+        copy1.textContent = text;\
+        copy2.textContent = text;\
+\
+        requestAnimationFrame(() => \{\
+            const width = copy1.offsetWidth;\
+            const speed = 200; \
+            const duration = width / speed; \
+            track.style.setProperty('--ticker-duration', `$\{duration\}s`);\
+        \});\
+    \}\
+\
+    loadAll();\
+    setInterval(loadAll, 30000); \
+  </script>\
+</body>\
+</html>}
